@@ -2959,12 +2959,6 @@
         <ctl name="TX DMIC MUX2" value="DMIC4" />
     </path>
 
-    <path name="dmic5">
-        <ctl name="TX_CDC_DMA_TX_3 Channels" value="One" />
-        <ctl name="TX_AIF1_CAP Mixer DEC2" value="1" />
-        <ctl name="TX DMIC MUX2" value="DMIC5" />
-    </path>
-
     <path name="speaker">
     <!--
         <ctl name="WSA_CDC_DMA_RX_0 Channels" value="Two" />
@@ -3156,7 +3150,7 @@
     </path>
 
     <path name="speaker-mic-liquid">
-        <path name="dmic5" />
+        <path name="dmic4" />
     </path>
 
     <path name="speaker-mic-sbc">
@@ -3243,7 +3237,7 @@
 <!-- ifdef VENDOR_EDIT -->
 <!-- add for MMI singel mic record test -->
     <path name="mmi-third-mic">
-        <path name="dmic5" />
+        <path name="dmic4" />
     </path>
 <!-- endif -->
 
@@ -3283,7 +3277,7 @@
     </path>
 
     <path name="handset-mic-rec-spec-gain">
-        <path name="dmic5" />
+        <path name="dmic3" />
     </path>
 
     <path name="headphone-mic-karaoke">
@@ -3293,7 +3287,7 @@
     </path>
 
     <path name="handset-mic-rec">
-        <path name="dmic5" />
+        <path name="dmic3" />
     </path>
 <!--endif -->
 
@@ -3456,10 +3450,10 @@
     <path name="sva-re-mic">
         <path name="dmic1" />
     </path>
-
+<!-- vincent.chen@MM.Audio, 2021/01/06, merge qcom tunings for qva -->
     <path name="qva-re-mic">
         <path name="dmic1" />
-        <ctl name="TX_DEC2 Volume" value="93" />
+        <ctl name="TX_DEC2 Volume" value="106" />
     </path>
 <!-- endif -->
 
@@ -3713,7 +3707,7 @@
     <path name="speaker-dmic-broadside">
         <ctl name="TX_CDC_DMA_TX_3 Channels" value="Two" />
         <ctl name="TX_AIF1_CAP Mixer DEC1" value="1" />
-        <ctl name="TX DMIC MUX1" value="DMIC3" />
+        <ctl name="TX DMIC MUX1" value="DMIC4" />
         <ctl name="TX_AIF1_CAP Mixer DEC2" value="1" />
         <ctl name="TX DMIC MUX2" value="DMIC1" />
     </path>
@@ -3731,11 +3725,20 @@
     <path name="three-mic">
         <ctl name="TX_CDC_DMA_TX_3 Channels" value="Three" />
         <ctl name="TX_AIF1_CAP Mixer DEC1" value="1" />
-        <ctl name="TX DMIC MUX1" value="DMIC1" />
         <ctl name="TX_AIF1_CAP Mixer DEC2" value="1" />
-        <ctl name="TX DMIC MUX2" value="DMIC3" />
         <ctl name="TX_AIF1_CAP Mixer DEC3" value="1" />
-        <ctl name="TX DMIC MUX3" value="DMIC5" />
+        <ctl name="TX DEC1 MUX" value="SWR_MIC" />
+        <ctl name="TX DEC2 MUX" value="SWR_MIC" />
+        <ctl name="TX DEC3 MUX" value="SWR_MIC" />
+        <ctl name="TX SMIC MUX1" value="SWR_MIC8" />
+        <ctl name="TX SMIC MUX2" value="SWR_MIC10" />
+        <ctl name="TX SMIC MUX3" value="SWR_MIC11" />
+        <ctl name="SWR_MIC0 HIFI PortMap" value="SWRM_TX3_CH1" />
+        <ctl name="SWR_MIC2 HIFI PortMap" value="SWRM_TX3_CH3" />
+        <ctl name="SWR_MIC3 HIFI PortMap" value="SWRM_TX3_CH4" />
+        <ctl name="SWR_MIC3 SWR_DMIC_MIXER Switch" value="1" />
+        <ctl name="SWR_MIC0 SWR_DMIC_MIXER Switch" value="1" />
+        <ctl name="SWR_MIC2 SWR_DMIC_MIXER Switch" value="1" />
     </path>
 
     <path name="speaker-tmic">
@@ -3897,12 +3900,6 @@
     <path name="unprocessed-headset-mic">
         <path name="headset-mic" />
     </path>
-
-<!-- alvin.zhangzr,20200915,add ozo path ,start -->
-    <path name="ozo-three-mic">
-        <path name="three-mic" />
-    </path>
-<!-- alvin.zhangzr,20200915,add ozo path ,end -->
 
     <!-- #ifdef VENDOR_EDIT-->
     <!-- #if OP_FEATURE_MM_RECORDING_SCREEN == 1-->

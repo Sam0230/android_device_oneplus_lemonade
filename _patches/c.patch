@@ -1,0 +1,129 @@
+From 9d3c6887bb50828f55509dcff4b569ace678affe Mon Sep 17 00:00:00 2001
+From: Albert Tang <tangalbert919@yahoo.com>
+Date: Thu, 24 Jun 2021 13:12:01 -1000
+Subject: [PATCH] lemonade: Use changes from LuK1337
+
+---
+ BoardConfig.mk                                     |  2 +-
+ device.mk                                          |  4 ++--
+ .../frameworks/base/core/res/res/values/config.xml | 12 ++++++------
+ .../frameworks/base/core/res/res/values/dimens.xml |  2 +-
+ .../{rounded_corner_bottom.xml => rounded.xml}     |  0
+ .../SystemUI/res/drawable/rounded_corner_top.xml   | 14 --------------
+ .../packages/SystemUI/res/values-land/dimens.xml   |  4 ++--
+ 7 files changed, 12 insertions(+), 26 deletions(-)
+ rename overlay/frameworks/base/packages/SystemUI/res/drawable/{rounded_corner_bottom.xml => rounded.xml} (100%)
+ delete mode 100644 overlay/frameworks/base/packages/SystemUI/res/drawable/rounded_corner_top.xml
+
+diff --git a/BoardConfig.mk b/BoardConfig.mk
+index 00c1d15..1beaf51 100644
+--- a/BoardConfig.mk
++++ b/BoardConfig.mk
+@@ -24,7 +24,7 @@ BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_PATH)/bluetooth/include
+ 
+ # Fingerprint
+ SOONG_CONFIG_ONEPLUS_FOD_POS_X = 453
+-SOONG_CONFIG_ONEPLUS_FOD_POS_Y = 2120
++SOONG_CONFIG_ONEPLUS_FOD_POS_Y = 2121
+ SOONG_CONFIG_ONEPLUS_FOD_SIZE = 174
+ 
+ # Properties
+diff --git a/device.mk b/device.mk
+index 590d55c..b471d0b 100644
+--- a/device.mk
++++ b/device.mk
+@@ -29,10 +29,10 @@ DEVICE_PACKAGE_OVERLAYS += \
+ 
+ # Device uses high-density artwork where available
+ PRODUCT_AAPT_CONFIG := normal
+-PRODUCT_AAPT_PREF_CONFIG := xxxhdpi
++PRODUCT_AAPT_PREF_CONFIG := xxhdpi
+ 
+ # Boot animation
+-TARGET_SCREEN_HEIGHT := 2352
++TARGET_SCREEN_HEIGHT := 2412
+ TARGET_SCREEN_WIDTH := 1080
+ 
+ # Audio
+diff --git a/overlay/frameworks/base/core/res/res/values/config.xml b/overlay/frameworks/base/core/res/res/values/config.xml
+index 8b74a8a..89f014e 100644
+--- a/overlay/frameworks/base/core/res/res/values/config.xml
++++ b/overlay/frameworks/base/core/res/res/values/config.xml
+@@ -470,10 +470,10 @@
+          Note that a physical cutout should be configured in pixels for the best results.
+          -->
+     <string translatable="false" name="config_mainBuiltInDisplayCutout">
+-        M 136,68
+-        M 102,68
+-        A 34,34 0 1,0 170,68
+-        A 34,34 0 1,0 102,68
++        M 115.5,62.25
++        M 83.25,62.25
++        A 32.25,32.25 0 1,0 147.75,62.25
++        A 32.25,32.25 0 1,0 83.25,62.25
+         Z
+         @left
+     </string>
+@@ -486,8 +486,8 @@
+          -->
+     <string translatable="false" name="config_mainBuiltInDisplayCutoutRectApproximation">
+         M 0,0
+-        H 164
+-        V 102.5
++        H 177
++        V 94
+         H 0
+         Z
+         @left
+diff --git a/overlay/frameworks/base/core/res/res/values/dimens.xml b/overlay/frameworks/base/core/res/res/values/dimens.xml
+index 733f4d7..1883896 100644
+--- a/overlay/frameworks/base/core/res/res/values/dimens.xml
++++ b/overlay/frameworks/base/core/res/res/values/dimens.xml
+@@ -20,7 +20,7 @@
+ <resources>
+     <!-- Height of the status bar in portrait. The height should be
+          Max((status bar content height + waterfall top size), top cutout size) -->
+-    <dimen name="status_bar_height_portrait">104px</dimen>
++    <dimen name="status_bar_height_portrait">105px</dimen>
+ 
+     <!-- Default radius of the software rounded corners. -->
+     <dimen name="rounded_corner_radius">8dp</dimen>
+diff --git a/overlay/frameworks/base/packages/SystemUI/res/drawable/rounded_corner_bottom.xml b/overlay/frameworks/base/packages/SystemUI/res/drawable/rounded.xml
+similarity index 100%
+rename from overlay/frameworks/base/packages/SystemUI/res/drawable/rounded_corner_bottom.xml
+rename to overlay/frameworks/base/packages/SystemUI/res/drawable/rounded.xml
+diff --git a/overlay/frameworks/base/packages/SystemUI/res/drawable/rounded_corner_top.xml b/overlay/frameworks/base/packages/SystemUI/res/drawable/rounded_corner_top.xml
+deleted file mode 100644
+index aed278a..0000000
+--- a/overlay/frameworks/base/packages/SystemUI/res/drawable/rounded_corner_top.xml
++++ /dev/null
+@@ -1,14 +0,0 @@
+-<vector xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:width="170px"
+-    android:height="170px"
+-    android:viewportWidth="170"
+-    android:viewportHeight="170">
+-
+-    <path
+-        android:fillColor="#ff000000"
+-        android:pathData="M113,0c-8.27.67-16.58,1.06-24.81,2.06-24.74,3-47.31,10.69-64.29,30.32C11.68,46.49,6,63.35,3.15,81.31,1.82,89.67,1.58,98.19.82,106.64.6,109.1.28,111.55,0,114V0Z"
+-        android:strokeColor="#00000000"
+-        android:strokeWidth="1.0"
+-        android:fillType="evenOdd" />
+-
+-</vector>
+diff --git a/overlay/frameworks/base/packages/SystemUI/res/values-land/dimens.xml b/overlay/frameworks/base/packages/SystemUI/res/values-land/dimens.xml
+index fd6d394..2ca18bb 100644
+--- a/overlay/frameworks/base/packages/SystemUI/res/values-land/dimens.xml
++++ b/overlay/frameworks/base/packages/SystemUI/res/values-land/dimens.xml
+@@ -17,8 +17,8 @@
+ -->
+ <resources>
+     <!-- the padding on the start of the statusbar -->
+-    <dimen name="status_bar_padding_start">63px</dimen>
++    <dimen name="status_bar_padding_start">48px</dimen>
+ 
+     <!-- the padding on the end of the statusbar -->
+-    <dimen name="status_bar_padding_end">63px</dimen>
++    <dimen name="status_bar_padding_end">48px</dimen>
+ </resources>

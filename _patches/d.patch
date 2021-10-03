@@ -1,0 +1,48 @@
+From 0c86b48492657856ef870594aecc7a49f3d2d32e Mon Sep 17 00:00:00 2001
+From: Albert Tang <tangalbert919@yahoo.com>
+Date: Thu, 24 Jun 2021 14:36:47 -1000
+Subject: [PATCH] lemonade: Update blobs and odm_feature_list from OOS 11.2.7.7
+
+---
+ lineage_lemonade.mk                 |  2 +-
+ proprietary-files.txt               |  4 ++--
+ rootdir/etc/init.recovery.target.rc |  2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/lineage_lemonade.mk b/lineage_lemonade.mk
+index 99b58d7..999dd96 100644
+--- a/lineage_lemonade.mk
++++ b/lineage_lemonade.mk
+@@ -37,4 +37,4 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
+     PRODUCT_NAME=OnePlus9_EEA \
+     PRIVATE_BUILD_DESC="OnePlus9-user 11   release-keys"
+ 
+-BUILD_FINGERPRINT := OnePlus/OnePlus9_EEA/OnePlus9:11/RKQ1.201105.002/2105252328:user/release-keys
++BUILD_FINGERPRINT := OnePlus/OnePlus9_EEA/OnePlus9:11/RKQ1.201105.002/2106092118:user/release-keys
+diff --git a/proprietary-files.txt b/proprietary-files.txt
+index 7d26a83..512db24 100644
+--- a/proprietary-files.txt
++++ b/proprietary-files.txt
+@@ -1,4 +1,4 @@
+-# All unpinned blobs below are extracted from OnePlus9Oxygen_22.E.09_OTA_0090_all_2105252341_e677846a0
++# All unpinned blobs below are extracted from OnePlus9Oxygen_22.E.10_OTA_0100_all_2106092130_7e89f
+ 
+ # ACDB
+ odm/etc/acdbdata/acdb_version
+@@ -381,7 +381,7 @@ vendor/etc/sensors/config/lahaina_stk2232_0.json
+ vendor/etc/sensors/config/lahaina_sx9324_0.json
+ vendor/etc/sensors/config/lahaina_sx9324up_0.json
+ vendor/etc/sensors/config/lahaina_sx932x_0.json
+-vendor/etc/sensors/config/lahaina_tcs3408.json
++vendor/etc/sensors/config/lahaina_tcs3408_0.json
+ vendor/etc/sensors/config/lahaina_tcs3707.json
+ vendor/etc/sensors/config/lps22hb_0.json
+ vendor/etc/sensors/config/mmc56x3x_0.json
+diff --git a/rootdir/etc/init.recovery.target.rc b/rootdir/etc/init.recovery.target.rc
+index 9a7bc88..dbbd1d1 100644
+--- a/rootdir/etc/init.recovery.target.rc
++++ b/rootdir/etc/init.recovery.target.rc
+@@ -1,2 +1,2 @@
+ on init
+-    setprop ro.sf.lcd_density 360
++    setprop ro.sf.lcd_density 450

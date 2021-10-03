@@ -1,0 +1,480 @@
+From 1f37d52c679455b4c4033627d4c5f17a61bc529a Mon Sep 17 00:00:00 2001
+From: Albert Tang <tangalbert919@yahoo.com>
+Date: Mon, 14 Jun 2021 10:30:44 -0700
+Subject: [PATCH] lemonade: Convert from lemonadep
+
+---
+ Android.mk                                    |  2 +-
+ AndroidProducts.mk                            |  8 +--
+ BoardConfig.mk                                | 10 +--
+ bluetooth/include/bdroid_buildcfg.h           |  2 +-
+ device.mk                                     |  6 +-
+ extract-files.sh                              |  2 +-
+ lineage_lemonadep.mk => lineage_lemonade.mk   | 18 ++---
+ .../SystemUI/res/values-port/dimens.xml       |  2 +-
+ .../base/core/res/res/values/config.xml       | 12 ++--
+ .../base/core/res/res/values/dimens.xml       |  2 +-
+ .../SettingsProvider/res/values/defaults.xml  |  2 +-
+ .../SystemUI/res/drawable/rounded.xml         | 14 ----
+ .../res/drawable/rounded_corner_bottom.xml    | 14 ++++
+ .../res/drawable/rounded_corner_top.xml       | 14 ++++
+ .../packages/SystemUI/res/values/dimens.xml   |  6 +-
+ proprietary-files.txt                         | 67 ++++++-------------
+ rootdir/etc/init.recovery.target.rc           |  2 +-
+ setup-makefiles.sh                            |  2 +-
+ 18 files changed, 87 insertions(+), 98 deletions(-)
+ rename lineage_lemonadep.mk => lineage_lemonade.mk (71%)
+ delete mode 100644 overlay/frameworks/base/packages/SystemUI/res/drawable/rounded.xml
+ create mode 100644 overlay/frameworks/base/packages/SystemUI/res/drawable/rounded_corner_bottom.xml
+ create mode 100644 overlay/frameworks/base/packages/SystemUI/res/drawable/rounded_corner_top.xml
+
+diff --git a/Android.mk b/Android.mk
+index df27c37..ce6c216 100644
+--- a/Android.mk
++++ b/Android.mk
+@@ -27,6 +27,6 @@
+ 
+ LOCAL_PATH := $(call my-dir)
+ 
+-ifeq ($(TARGET_DEVICE),lemonadep)
++ifeq ($(TARGET_DEVICE),lemonade)
+ include $(call all-makefiles-under,$(LOCAL_PATH))
+ endif
+diff --git a/AndroidProducts.mk b/AndroidProducts.mk
+index 59521bf..ea870c3 100644
+--- a/AndroidProducts.mk
++++ b/AndroidProducts.mk
+@@ -15,9 +15,9 @@
+ #
+ 
+ PRODUCT_MAKEFILES := \
+-    $(LOCAL_DIR)/lineage_lemonadep.mk
++    $(LOCAL_DIR)/lineage_lemonade.mk
+ 
+ COMMON_LUNCH_CHOICES := \
+-    lineage_lemonadep-user \
+-    lineage_lemonadep-userdebug \
+-    lineage_lemonadep-eng
++    lineage_lemonade-user \
++    lineage_lemonade-userdebug \
++    lineage_lemonade-eng
+diff --git a/BoardConfig.mk b/BoardConfig.mk
+index eb0e2a7..00c1d15 100644
+--- a/BoardConfig.mk
++++ b/BoardConfig.mk
+@@ -17,15 +17,15 @@
+ # Inherit from oneplus sm8350-common
+ -include device/oneplus/sm8350-common/BoardConfigCommon.mk
+ 
+-DEVICE_PATH := device/oneplus/lemonadep
++DEVICE_PATH := device/oneplus/lemonade
+ 
+ # Bluetooth
+ BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_PATH)/bluetooth/include
+ 
+ # Fingerprint
+-SOONG_CONFIG_ONEPLUS_FOD_POS_X = 604
+-SOONG_CONFIG_ONEPLUS_FOD_POS_Y = 2828
+-SOONG_CONFIG_ONEPLUS_FOD_SIZE = 232
++SOONG_CONFIG_ONEPLUS_FOD_POS_X = 453
++SOONG_CONFIG_ONEPLUS_FOD_POS_Y = 2120
++SOONG_CONFIG_ONEPLUS_FOD_SIZE = 174
+ 
+ # Properties
+ TARGET_VENDOR_PROP += $(DEVICE_PATH)/vendor.prop
+@@ -34,4 +34,4 @@ TARGET_VENDOR_PROP += $(DEVICE_PATH)/vendor.prop
+ TARGET_RECOVERY_DENSITY := xxhdpi
+ 
+ # inherit from the proprietary version
+--include vendor/oneplus/lemonadep/BoardConfigVendor.mk
++-include vendor/oneplus/lemonade/BoardConfigVendor.mk
+diff --git a/bluetooth/include/bdroid_buildcfg.h b/bluetooth/include/bdroid_buildcfg.h
+index 607519e..85bdfe5 100644
+--- a/bluetooth/include/bdroid_buildcfg.h
++++ b/bluetooth/include/bdroid_buildcfg.h
+@@ -21,7 +21,7 @@
+ #ifndef _BDROID_BUILDCFG_H
+ #define _BDROID_BUILDCFG_H
+ 
+-#define BTM_DEF_LOCAL_NAME "OnePlus 9 Pro"
++#define BTM_DEF_LOCAL_NAME "OnePlus 9"
+ // Disables read remote device feature
+ #define MAX_ACL_CONNECTIONS   16
+ #define MAX_L2CAP_CHANNELS    32
+diff --git a/device.mk b/device.mk
+index cc22f33..590d55c 100644
+--- a/device.mk
++++ b/device.mk
+@@ -32,8 +32,8 @@ PRODUCT_AAPT_CONFIG := normal
+ PRODUCT_AAPT_PREF_CONFIG := xxxhdpi
+ 
+ # Boot animation
+-TARGET_SCREEN_HEIGHT := 3168
+-TARGET_SCREEN_WIDTH := 1440
++TARGET_SCREEN_HEIGHT := 2352
++TARGET_SCREEN_WIDTH := 1080
+ 
+ # Audio
+ PRODUCT_COPY_FILES += \
+@@ -53,4 +53,4 @@ PRODUCT_SHIPPING_API_LEVEL := 30
+ $(call inherit-product, device/oneplus/sm8350-common/common.mk)
+ 
+ # Inherit from vendor blobs
+-$(call inherit-product, vendor/oneplus/lemonadep/lemonadep-vendor.mk)
++$(call inherit-product, vendor/oneplus/lemonade/lemonade-vendor.mk)
+diff --git a/extract-files.sh b/extract-files.sh
+index b937852..66d9eb5 100755
+--- a/extract-files.sh
++++ b/extract-files.sh
+@@ -14,7 +14,7 @@ fi
+ 
+ set -e
+ 
+-export DEVICE=lemonadep
++export DEVICE=lemonade
+ export DEVICE_COMMON=sm8350-common
+ export VENDOR=oneplus
+ 
+diff --git a/lineage_lemonadep.mk b/lineage_lemonade.mk
+similarity index 71%
+rename from lineage_lemonadep.mk
+rename to lineage_lemonade.mk
+index 9616021..ce3e126 100644
+--- a/lineage_lemonadep.mk
++++ b/lineage_lemonade.mk
+@@ -18,23 +18,23 @@
+ $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
+ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+ 
+-# Inherit from lemonadep device
+-$(call inherit-product, device/oneplus/lemonadep/device.mk)
++# Inherit from lemonade device
++$(call inherit-product, device/oneplus/lemonade/device.mk)
+ 
+ # Inherit some common Lineage stuff.
+ $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
+ 
+-PRODUCT_NAME := lineage_lemonadep
+-PRODUCT_DEVICE := lemonadep
++PRODUCT_NAME := lineage_lemonade
++PRODUCT_DEVICE := lemonade
+ PRODUCT_MANUFACTURER := OnePlus
+ PRODUCT_BRAND := OnePlus
+-PRODUCT_MODEL := LE2123
++PRODUCT_MODEL := LE2113
+ 
+ PRODUCT_GMS_CLIENTID_BASE := android-oneplus
+ 
+ PRODUCT_BUILD_PROP_OVERRIDES += \
+-    PRODUCT_DEVICE=OnePlus9Pro \
+-    PRODUCT_NAME=OnePlus9Pro_EEA \
+-    PRIVATE_BUILD_DESC="OnePlus9Pro-user 11   release-keys"
++    PRODUCT_DEVICE=OnePlus9 \
++    PRODUCT_NAME=OnePlus9 \
++    PRIVATE_BUILD_DESC="OnePlus9-user 11   release-keys"
+ 
+-BUILD_FINGERPRINT := OnePlus/OnePlus9Pro_EEA/OnePlus9Pro:11/RKQ1.201105.002/2109102008:user/release-keys
++BUILD_FINGERPRINT := OnePlus/OnePlus9/OnePlus9:11/RKQ1.201105.002/2105290043:user/release-keys
+diff --git a/overlay-lineage/frameworks/base/packages/SystemUI/res/values-port/dimens.xml b/overlay-lineage/frameworks/base/packages/SystemUI/res/values-port/dimens.xml
+index a204b25..2d0df76 100644
+--- a/overlay-lineage/frameworks/base/packages/SystemUI/res/values-port/dimens.xml
++++ b/overlay-lineage/frameworks/base/packages/SystemUI/res/values-port/dimens.xml
+@@ -16,5 +16,5 @@
+ -->
+ <resources>
+     <!-- The bottom margin of the keyguard security container -->
+-    <dimen name="kg_security_container_min_bottom_margin">504px</dimen>
++    <dimen name="kg_security_container_min_bottom_margin">367px</dimen>
+ </resources>
+diff --git a/overlay/frameworks/base/core/res/res/values/config.xml b/overlay/frameworks/base/core/res/res/values/config.xml
+index d9e93ee..8b74a8a 100644
+--- a/overlay/frameworks/base/core/res/res/values/config.xml
++++ b/overlay/frameworks/base/core/res/res/values/config.xml
+@@ -470,10 +470,10 @@
+          Note that a physical cutout should be configured in pixels for the best results.
+          -->
+     <string translatable="false" name="config_mainBuiltInDisplayCutout">
+-        M 154,83
+-        M 111,83
+-        A 43,43 0 1,0 197,83
+-        A 43,43 0 1,0 111,83
++        M 136,68
++        M 102,68
++        A 34,34 0 1,0 170,68
++        A 34,34 0 1,0 102,68
+         Z
+         @left
+     </string>
+@@ -486,8 +486,8 @@
+          -->
+     <string translatable="false" name="config_mainBuiltInDisplayCutoutRectApproximation">
+         M 0,0
+-        H 236
+-        V 126
++        H 164
++        V 102.5
+         H 0
+         Z
+         @left
+diff --git a/overlay/frameworks/base/core/res/res/values/dimens.xml b/overlay/frameworks/base/core/res/res/values/dimens.xml
+index 0129212..733f4d7 100644
+--- a/overlay/frameworks/base/core/res/res/values/dimens.xml
++++ b/overlay/frameworks/base/core/res/res/values/dimens.xml
+@@ -20,7 +20,7 @@
+ <resources>
+     <!-- Height of the status bar in portrait. The height should be
+          Max((status bar content height + waterfall top size), top cutout size) -->
+-    <dimen name="status_bar_height_portrait">138px</dimen>
++    <dimen name="status_bar_height_portrait">104px</dimen>
+ 
+     <!-- Default radius of the software rounded corners. -->
+     <dimen name="rounded_corner_radius">8dp</dimen>
+diff --git a/overlay/frameworks/base/packages/SettingsProvider/res/values/defaults.xml b/overlay/frameworks/base/packages/SettingsProvider/res/values/defaults.xml
+index aea05c1..a10b5d4 100644
+--- a/overlay/frameworks/base/packages/SettingsProvider/res/values/defaults.xml
++++ b/overlay/frameworks/base/packages/SettingsProvider/res/values/defaults.xml
+@@ -18,5 +18,5 @@
+ -->
+ <resources>
+     <!-- Default for Settings.Global.DEVICE_NAME $1=MODEL-->
+-    <string name="def_device_name_simple">OnePlus 9 Pro</string>
++    <string name="def_device_name_simple">OnePlus 9</string>
+ </resources>
+diff --git a/overlay/frameworks/base/packages/SystemUI/res/drawable/rounded.xml b/overlay/frameworks/base/packages/SystemUI/res/drawable/rounded.xml
+deleted file mode 100644
+index 1dd3baa..0000000
+--- a/overlay/frameworks/base/packages/SystemUI/res/drawable/rounded.xml
++++ /dev/null
+@@ -1,14 +0,0 @@
+-<vector xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:width="209px"
+-    android:height="209px"
+-    android:viewportWidth="209"
+-    android:viewportHeight="209">
+-
+-    <path
+-        android:fillColor="#ff000000"
+-        android:pathData="M196.755,-0L-0,-0L-0,208.273C-0,116.958 2.154,70.516 39.062,36.485C75.202,3.163 108.538,-0 196.755,-0Z"
+-        android:strokeColor="#00000000"
+-        android:strokeWidth="1.0"
+-        android:fillType="evenOdd" />
+-
+-</vector>
+diff --git a/overlay/frameworks/base/packages/SystemUI/res/drawable/rounded_corner_bottom.xml b/overlay/frameworks/base/packages/SystemUI/res/drawable/rounded_corner_bottom.xml
+new file mode 100644
+index 0000000..90c793d
+--- /dev/null
++++ b/overlay/frameworks/base/packages/SystemUI/res/drawable/rounded_corner_bottom.xml
+@@ -0,0 +1,14 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="166px"
++    android:height="166px"
++    android:viewportWidth="166"
++    android:viewportHeight="166">
++
++    <path
++        android:fillColor="#ff000000"
++        android:pathData="M115,0c-8.78.67-17.59,1-26.32,2.08C68.09,4.59,48.58,10,32.35,23.92,14.87,39,6.72,58.77,3.14,80.81,1.78,89.16,1.56,97.69.79,106.13.58,108.43.27,110.71,0,113V0Z"
++        android:strokeColor="#00000000"
++        android:strokeWidth="1.0"
++        android:fillType="evenOdd" />
++
++</vector>
+diff --git a/overlay/frameworks/base/packages/SystemUI/res/drawable/rounded_corner_top.xml b/overlay/frameworks/base/packages/SystemUI/res/drawable/rounded_corner_top.xml
+new file mode 100644
+index 0000000..aed278a
+--- /dev/null
++++ b/overlay/frameworks/base/packages/SystemUI/res/drawable/rounded_corner_top.xml
+@@ -0,0 +1,14 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="170px"
++    android:height="170px"
++    android:viewportWidth="170"
++    android:viewportHeight="170">
++
++    <path
++        android:fillColor="#ff000000"
++        android:pathData="M113,0c-8.27.67-16.58,1.06-24.81,2.06-24.74,3-47.31,10.69-64.29,30.32C11.68,46.49,6,63.35,3.15,81.31,1.82,89.67,1.58,98.19.82,106.64.6,109.1.28,111.55,0,114V0Z"
++        android:strokeColor="#00000000"
++        android:strokeWidth="1.0"
++        android:fillType="evenOdd" />
++
++</vector>
+diff --git a/overlay/frameworks/base/packages/SystemUI/res/values/dimens.xml b/overlay/frameworks/base/packages/SystemUI/res/values/dimens.xml
+index 8f4c412..6d895e9 100644
+--- a/overlay/frameworks/base/packages/SystemUI/res/values/dimens.xml
++++ b/overlay/frameworks/base/packages/SystemUI/res/values/dimens.xml
+@@ -17,13 +17,13 @@
+ -->
+ <resources>
+     <!--  Allow CornerHandleView and PathSpecCornerPathRenderer to decouple from corner-radius -->
+-    <dimen name="config_rounded_mask_size">156px</dimen>
++    <dimen name="config_rounded_mask_size">97px</dimen>
+ 
+     <!-- the padding on the start of the statusbar -->
+     <dimen name="status_bar_padding_start">0px</dimen>
+ 
+     <!-- the padding on the end of the statusbar -->
+-    <dimen name="status_bar_padding_end">65px</dimen>
++    <dimen name="status_bar_padding_end">48px</dimen>
+ 
+     <!-- Height of the status bar header bar when on Keyguard -->
+     <dimen name="status_bar_header_height_keyguard">@*android:dimen/status_bar_height</dimen>
+@@ -34,5 +34,5 @@
+     <!-- Margin on the right side of the system icon group on Keyguard. -->
+     <dimen name="system_icons_keyguard_padding_end">@dimen/status_bar_padding_end</dimen>
+ 
+-    <dimen name="keyguard_indication_margin_bottom">87px</dimen>
++    <dimen name="keyguard_indication_margin_bottom">65px</dimen>
+ </resources>
+diff --git a/proprietary-files.txt b/proprietary-files.txt
+index 9fc75a8..7d26a83 100644
+--- a/proprietary-files.txt
++++ b/proprietary-files.txt
+@@ -1,4 +1,4 @@
+-# All unpinned blobs below are extracted from OnePlus9ProOxygen_22.E.12_OTA_0120_all_2109102019_a211d7c24258e
++# All unpinned blobs below are extracted from OnePlus9Oxygen_22.E.09_OTA_0090_all_2105252341_e677846a0
+ 
+ # ACDB
+ odm/etc/acdbdata/acdb_version
+@@ -29,10 +29,10 @@ vendor/etc/acdbdata/nn_vad_models/fai__3.0.0_0.0__eai_1.10.pmd
+ vendor/firmware/tfa98xx.cnt
+ 
+ # Bluetooth firmware
+-vendor/etc/bluetooth/nvm/1111hpnv10.bin
+-vendor/etc/bluetooth/nvm/1113hpnv10.bin
+-vendor/etc/bluetooth/nvm/1121hpnv10.bin
+-vendor/etc/bluetooth/nvm/1122hpnv10.bin
++vendor/etc/bluetooth/nvm/1211hpnv10.bin
++vendor/etc/bluetooth/nvm/1213hpnv10.bin
++vendor/etc/bluetooth/nvm/1221hpnv10.bin
++vendor/etc/bluetooth/nvm/1222hpnv10.bin
+ 
+ # Camera
+ vendor/etc/camera/ashdr/ncf_pack_imx471.ncf
+@@ -183,9 +183,8 @@ vendor/etc/camera/tonemap/tonemap_lut_9
+ vendor/etc/camera/beauty_body_cn.dlc
+ vendor/etc/camera/beauty_body_in.dlc
+ vendor/etc/camera/big_face_retouch_indian.dlc
+-vendor/etc/camera/calibrationOutput_uw_lemonadep.bin
+-vendor/etc/camera/calibrationOutput_uw_lemonadep_686.bin
+-vendor/etc/camera/calibrationOutput_wt_lemonadep.bin
++vendor/etc/camera/calibrationOutput_uw_lemonade.bin
++vendor/etc/camera/calibrationOutput_uw_lemonade_686.bin
+ vendor/etc/camera/CameraHWConfiguration.config
+ vendor/etc/camera/eis_camera.vcfg
+ vendor/etc/camera/face_retouch_chinese.bin
+@@ -194,9 +193,8 @@ vendor/etc/camera/gasryuv_1.2_wp.model
+ vendor/etc/camera/M_Attribute_AG_BMW_1.1.0.model.hardcode
+ vendor/etc/camera/selfbokehmodel.bin
+ vendor/etc/camera/selfbokehParam.json
+-vendor/etc/init/calibrationOutput_uw_lemonadep.rc
+-vendor/etc/init/calibrationOutput_uw_lemonadep_686.rc
+-vendor/etc/init/calibrationOutput_wt_lemonadep.rc
++vendor/etc/init/calibrationOutput_uw_lemonade.rc
++vendor/etc/init/calibrationOutput_uw_lemonade_686.rc
+ vendor/lib64/camera/components/com.arcsoft.node.eisv2.so
+ vendor/lib64/camera/components/com.arcsoft.node.smooth_transition.so
+ vendor/lib64/camera/components/com.oplus.node.rtb.so
+@@ -259,15 +257,13 @@ vendor/lib64/camera/com.qti.sensor.imx689.so
+ vendor/lib64/camera/com.qti.sensor.imx766.so
+ vendor/lib64/camera/com.qti.sensor.imx789.so
+ vendor/lib64/camera/com.qti.sensor.ov08a10.so
+-vendor/lib64/camera/com.qti.sensormodule.lemonadep.holitech_gc02m1b.bin
+-vendor/lib64/camera/com.qti.sensormodule.lemonadep.qtech_ov08a10.bin
+-vendor/lib64/camera/com.qti.sensormodule.lemonadep.semco_imx789.bin
+-vendor/lib64/camera/com.qti.sensormodule.lemonadep.semco_imx789_MP.bin
+-vendor/lib64/camera/com.qti.sensormodule.lemonadep.sunny_imx686.bin
+-vendor/lib64/camera/com.qti.sensormodule.lemonadep.sunny_imx766.bin
+-vendor/lib64/camera/com.qti.sensormodule.lemonadep.sunny_imx766_ak7375c.bin
+-vendor/lib64/camera/com.qti.sensormodule.lemonadep.sunny_imx766_MP.bin
+-vendor/lib64/camera/com.qti.sensormodule.lemonadep.truly_imx471.bin
++vendor/lib64/camera/com.qti.sensormodule.lemonade.semco_imx689.bin
++vendor/lib64/camera/com.qti.sensormodule.lemonade.shine_gc02m1b.bin
++vendor/lib64/camera/com.qti.sensormodule.lemonade.sunny_imx686.bin
++vendor/lib64/camera/com.qti.sensormodule.lemonade.sunny_imx766.bin
++vendor/lib64/camera/com.qti.sensormodule.lemonade.sunny_imx766_ak7375c.bin
++vendor/lib64/camera/com.qti.sensormodule.lemonade.sunny_imx766_MP.bin
++vendor/lib64/camera/com.qti.sensormodule.lemonade.truly_imx471.bin
+ vendor/lib64/camera/com.qti.tuned.holitech_gc02m1b.bin
+ vendor/lib64/camera/com.qti.tuned.qtech_ov08a10.bin
+ vendor/lib64/camera/com.qti.tuned.semco_imx689.bin
+@@ -313,24 +309,6 @@ vendor/lib64/vendor.goodix.hardware.biometrics.fingerprint@2.1.so
+ 
+ # Iris
+ vendor/bin/hw/vendor.pixelworks.hardware.display.iris-service
+-vendor/etc/inparm/iris5/inParm1.txt
+-vendor/etc/inparm/iris5/inParm10.txt
+-vendor/etc/inparm/iris5/inParm11.txt
+-vendor/etc/inparm/iris5/inParm12.txt
+-vendor/etc/inparm/iris5/inParm13.txt
+-vendor/etc/inparm/iris5/inParm14.txt
+-vendor/etc/inparm/iris5/inParm15.txt
+-vendor/etc/inparm/iris5/inParm16.txt
+-vendor/etc/inparm/iris5/inParm17.txt
+-vendor/etc/inparm/iris5/inParm18.txt
+-vendor/etc/inparm/iris5/inParm2.txt
+-vendor/etc/inparm/iris5/inParm3.txt
+-vendor/etc/inparm/iris5/inParm4.txt
+-vendor/etc/inparm/iris5/inParm5.txt
+-vendor/etc/inparm/iris5/inParm6.txt
+-vendor/etc/inparm/iris5/inParm7.txt
+-vendor/etc/inparm/iris5/inParm8.txt
+-vendor/etc/inparm/iris5/inParm9.txt
+ vendor/etc/inparm/irissoft/inParm.lst
+ vendor/etc/inparm/irissoft/inParm10.txt
+ vendor/etc/inparm/irissoft/inParm11.txt
+@@ -371,19 +349,16 @@ vendor/etc/inparm/irissoft/inParm8_c.txt
+ vendor/etc/inparm/irissoft/mcfCheck.txt
+ vendor/etc/irissoft.fw
+ vendor/etc/irissoft_fod.fw
+-vendor/firmware/iris5.fw
+-vendor/firmware/iris5_ccf1.fw
+-vendor/firmware/iris5_ccf2.fw
+ 
+ # NFC configs
+ vendor/etc/libnfc-mtp-SN100.conf
+-vendor/etc/libnfc-mtp-SN100.conf_19815
+-vendor/etc/libnfc-mtp-SN100.conf_20857
+-vendor/etc/libnfc-mtp-SN100.conf_20858
+-vendor/etc/libnfc-mtp-SN100.conf_20859
++vendor/etc/libnfc-mtp-SN100.conf_19825
++vendor/etc/libnfc-mtp-SN100.conf_20851
++vendor/etc/libnfc-mtp-SN100.conf_20852
++vendor/etc/libnfc-mtp-SN100.conf_20853
+ vendor/etc/libnfc-mtp-SN100_38_4MHZ.conf
+ 
+ # ODM feature list
+ odm/etc/odm_feature_list
+ 
+ # Sensors
+@@ -393,7 +368,7 @@ vendor/etc/sensors/config/icm4x6xx_0.json
+ vendor/etc/sensors/config/lahaina_ak0991x_0.json
+ vendor/etc/sensors/config/lahaina_aw9610x_0.json
+ vendor/etc/sensors/config/lahaina_aw9610x_down_0.json
+-vendor/etc/sensors/config/lahaina_bmi26x_0.json
++vendor/etc/sensors/config/lahaina_bmi16x_0.json
+ vendor/etc/sensors/config/lahaina_bmp380_0.json
+ vendor/etc/sensors/config/lahaina_default_sensors.json
+ vendor/etc/sensors/config/lahaina_dynamic_sensors.json
+diff --git a/rootdir/etc/init.recovery.target.rc b/rootdir/etc/init.recovery.target.rc
+index 5974201..9a7bc88 100644
+--- a/rootdir/etc/init.recovery.target.rc
++++ b/rootdir/etc/init.recovery.target.rc
+@@ -1,2 +1,2 @@
+ on init
+-    setprop ro.sf.lcd_density 480
++    setprop ro.sf.lcd_density 360
+diff --git a/setup-makefiles.sh b/setup-makefiles.sh
+index 081d950..d68ac8c 100755
+--- a/setup-makefiles.sh
++++ b/setup-makefiles.sh
+@@ -8,7 +8,7 @@
+ 
+ set -e
+ 
+-export DEVICE=lemonadep
++export DEVICE=lemonade
+ export DEVICE_COMMON=sm8350-common
+ export VENDOR=oneplus
+ 

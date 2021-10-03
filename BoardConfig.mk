@@ -17,15 +17,15 @@
 # Inherit from oneplus sm8350-common
 -include device/oneplus/sm8350-common/BoardConfigCommon.mk
 
-DEVICE_PATH := device/oneplus/lemonadep
+DEVICE_PATH := device/oneplus/lemonade
 
 # Bluetooth
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_PATH)/bluetooth/include
 
 # Fingerprint
-SOONG_CONFIG_ONEPLUS_FOD_POS_X = 604
-SOONG_CONFIG_ONEPLUS_FOD_POS_Y = 2828
-SOONG_CONFIG_ONEPLUS_FOD_SIZE = 232
+SOONG_CONFIG_ONEPLUS_FOD_POS_X = 453
+SOONG_CONFIG_ONEPLUS_FOD_POS_Y = 2121
+SOONG_CONFIG_ONEPLUS_FOD_SIZE = 174
 
 # Properties
 TARGET_VENDOR_PROP += $(DEVICE_PATH)/vendor.prop
@@ -34,4 +34,4 @@ TARGET_VENDOR_PROP += $(DEVICE_PATH)/vendor.prop
 TARGET_RECOVERY_DENSITY := xxhdpi
 
 # inherit from the proprietary version
--include vendor/oneplus/lemonadep/BoardConfigVendor.mk
+-include vendor/oneplus/lemonade/BoardConfigVendor.mk

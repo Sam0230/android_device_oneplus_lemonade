@@ -29,11 +29,11 @@ DEVICE_PACKAGE_OVERLAYS += \
 
 # Device uses high-density artwork where available
 PRODUCT_AAPT_CONFIG := normal
-PRODUCT_AAPT_PREF_CONFIG := xxxhdpi
+PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 
 # Boot animation
-TARGET_SCREEN_HEIGHT := 3168
-TARGET_SCREEN_WIDTH := 1440
+TARGET_SCREEN_HEIGHT := 2412
+TARGET_SCREEN_WIDTH := 1080
 
 # Audio
 PRODUCT_COPY_FILES += \
@@ -49,4 +49,4 @@ PRODUCT_SHIPPING_API_LEVEL := 30
 $(call inherit-product, device/oneplus/sm8350-common/common.mk)
 
 # Inherit from vendor blobs
-$(call inherit-product, vendor/oneplus/lemonadep/lemonadep-vendor.mk)
+$(call inherit-product, vendor/oneplus/lemonade/lemonade-vendor.mk)

@@ -1,4 +1,4 @@
-# All unpinned blobs below are extracted from OnePlus9ProOxygen_22.E.12_OTA_0120_all_2109102019_a211d7c24258e
+# All unpinned blobs below are extracted from OnePlus9Oxygen_22.E.10_OTA_0100_all_2106092130_7e89f
 
 # ACDB
 odm/etc/acdbdata/acdb_version
@@ -29,10 +29,10 @@ vendor/etc/acdbdata/nn_vad_models/fai__3.0.0_0.0__eai_1.10.pmd
 vendor/firmware/tfa98xx.cnt
 
 # Bluetooth firmware
-vendor/etc/bluetooth/nvm/1111hpnv10.bin
-vendor/etc/bluetooth/nvm/1113hpnv10.bin
-vendor/etc/bluetooth/nvm/1121hpnv10.bin
-vendor/etc/bluetooth/nvm/1122hpnv10.bin
+vendor/etc/bluetooth/nvm/1211hpnv10.bin
+vendor/etc/bluetooth/nvm/1213hpnv10.bin
+vendor/etc/bluetooth/nvm/1221hpnv10.bin
+vendor/etc/bluetooth/nvm/1222hpnv10.bin
 
 # Camera
 vendor/etc/camera/ashdr/ncf_pack_imx471.ncf
@@ -183,9 +183,8 @@ vendor/etc/camera/tonemap/tonemap_lut_9
 vendor/etc/camera/beauty_body_cn.dlc
 vendor/etc/camera/beauty_body_in.dlc
 vendor/etc/camera/big_face_retouch_indian.dlc
-vendor/etc/camera/calibrationOutput_uw_lemonadep.bin
-vendor/etc/camera/calibrationOutput_uw_lemonadep_686.bin
-vendor/etc/camera/calibrationOutput_wt_lemonadep.bin
+vendor/etc/camera/calibrationOutput_uw_lemonade.bin
+vendor/etc/camera/calibrationOutput_uw_lemonade_686.bin
 vendor/etc/camera/CameraHWConfiguration.config
 vendor/etc/camera/eis_camera.vcfg
 vendor/etc/camera/face_retouch_chinese.bin
@@ -194,9 +193,8 @@ vendor/etc/camera/gasryuv_1.2_wp.model
 vendor/etc/camera/M_Attribute_AG_BMW_1.1.0.model.hardcode
 vendor/etc/camera/selfbokehmodel.bin
 vendor/etc/camera/selfbokehParam.json
-vendor/etc/init/calibrationOutput_uw_lemonadep.rc
-vendor/etc/init/calibrationOutput_uw_lemonadep_686.rc
-vendor/etc/init/calibrationOutput_wt_lemonadep.rc
+vendor/etc/init/calibrationOutput_uw_lemonade.rc
+vendor/etc/init/calibrationOutput_uw_lemonade_686.rc
 vendor/lib64/camera/components/com.arcsoft.node.eisv2.so
 vendor/lib64/camera/components/com.arcsoft.node.smooth_transition.so
 vendor/lib64/camera/components/com.oplus.node.rtb.so
@@ -259,15 +257,13 @@ vendor/lib64/camera/com.qti.sensor.imx689.so
 vendor/lib64/camera/com.qti.sensor.imx766.so
 vendor/lib64/camera/com.qti.sensor.imx789.so
 vendor/lib64/camera/com.qti.sensor.ov08a10.so
-vendor/lib64/camera/com.qti.sensormodule.lemonadep.holitech_gc02m1b.bin
-vendor/lib64/camera/com.qti.sensormodule.lemonadep.qtech_ov08a10.bin
-vendor/lib64/camera/com.qti.sensormodule.lemonadep.semco_imx789.bin
-vendor/lib64/camera/com.qti.sensormodule.lemonadep.semco_imx789_MP.bin
-vendor/lib64/camera/com.qti.sensormodule.lemonadep.sunny_imx686.bin
-vendor/lib64/camera/com.qti.sensormodule.lemonadep.sunny_imx766.bin
-vendor/lib64/camera/com.qti.sensormodule.lemonadep.sunny_imx766_ak7375c.bin
-vendor/lib64/camera/com.qti.sensormodule.lemonadep.sunny_imx766_MP.bin
-vendor/lib64/camera/com.qti.sensormodule.lemonadep.truly_imx471.bin
+vendor/lib64/camera/com.qti.sensormodule.lemonade.semco_imx689.bin
+vendor/lib64/camera/com.qti.sensormodule.lemonade.shine_gc02m1b.bin
+vendor/lib64/camera/com.qti.sensormodule.lemonade.sunny_imx686.bin
+vendor/lib64/camera/com.qti.sensormodule.lemonade.sunny_imx766.bin
+vendor/lib64/camera/com.qti.sensormodule.lemonade.sunny_imx766_ak7375c.bin
+vendor/lib64/camera/com.qti.sensormodule.lemonade.sunny_imx766_MP.bin
+vendor/lib64/camera/com.qti.sensormodule.lemonade.truly_imx471.bin
 vendor/lib64/camera/com.qti.tuned.holitech_gc02m1b.bin
 vendor/lib64/camera/com.qti.tuned.qtech_ov08a10.bin
 vendor/lib64/camera/com.qti.tuned.semco_imx689.bin
@@ -313,24 +309,6 @@ vendor/lib64/vendor.goodix.hardware.biometrics.fingerprint@2.1.so
 
 # Iris
 vendor/bin/hw/vendor.pixelworks.hardware.display.iris-service
-vendor/etc/inparm/iris5/inParm1.txt
-vendor/etc/inparm/iris5/inParm10.txt
-vendor/etc/inparm/iris5/inParm11.txt
-vendor/etc/inparm/iris5/inParm12.txt
-vendor/etc/inparm/iris5/inParm13.txt
-vendor/etc/inparm/iris5/inParm14.txt
-vendor/etc/inparm/iris5/inParm15.txt
-vendor/etc/inparm/iris5/inParm16.txt
-vendor/etc/inparm/iris5/inParm17.txt
-vendor/etc/inparm/iris5/inParm18.txt
-vendor/etc/inparm/iris5/inParm2.txt
-vendor/etc/inparm/iris5/inParm3.txt
-vendor/etc/inparm/iris5/inParm4.txt
-vendor/etc/inparm/iris5/inParm5.txt
-vendor/etc/inparm/iris5/inParm6.txt
-vendor/etc/inparm/iris5/inParm7.txt
-vendor/etc/inparm/iris5/inParm8.txt
-vendor/etc/inparm/iris5/inParm9.txt
 vendor/etc/inparm/irissoft/inParm.lst
 vendor/etc/inparm/irissoft/inParm10.txt
 vendor/etc/inparm/irissoft/inParm11.txt
@@ -371,16 +349,13 @@ vendor/etc/inparm/irissoft/inParm8_c.txt
 vendor/etc/inparm/irissoft/mcfCheck.txt
 vendor/etc/irissoft.fw
 vendor/etc/irissoft_fod.fw
-vendor/firmware/iris5.fw
-vendor/firmware/iris5_ccf1.fw
-vendor/firmware/iris5_ccf2.fw
 
 # NFC configs
 vendor/etc/libnfc-mtp-SN100.conf
-vendor/etc/libnfc-mtp-SN100.conf_19815
-vendor/etc/libnfc-mtp-SN100.conf_20857
-vendor/etc/libnfc-mtp-SN100.conf_20858
-vendor/etc/libnfc-mtp-SN100.conf_20859
+vendor/etc/libnfc-mtp-SN100.conf_19825
+vendor/etc/libnfc-mtp-SN100.conf_20851
+vendor/etc/libnfc-mtp-SN100.conf_20852
+vendor/etc/libnfc-mtp-SN100.conf_20853
 vendor/etc/libnfc-mtp-SN100_38_4MHZ.conf
 
 # ODM feature list
@@ -396,7 +371,7 @@ vendor/etc/sensors/config/icm4x6xx_0.json
 vendor/etc/sensors/config/lahaina_ak0991x_0.json
 vendor/etc/sensors/config/lahaina_aw9610x_0.json
 vendor/etc/sensors/config/lahaina_aw9610x_down_0.json
-vendor/etc/sensors/config/lahaina_bmi26x_0.json
+vendor/etc/sensors/config/lahaina_bmi16x_0.json
 vendor/etc/sensors/config/lahaina_bmp380_0.json
 vendor/etc/sensors/config/lahaina_default_sensors.json
 vendor/etc/sensors/config/lahaina_dynamic_sensors.json
@@ -409,7 +384,7 @@ vendor/etc/sensors/config/lahaina_stk2232_0.json
 vendor/etc/sensors/config/lahaina_sx9324_0.json
 vendor/etc/sensors/config/lahaina_sx9324up_0.json
 vendor/etc/sensors/config/lahaina_sx932x_0.json
-vendor/etc/sensors/config/lahaina_tcs3408.json
+vendor/etc/sensors/config/lahaina_tcs3408_0.json
 vendor/etc/sensors/config/lahaina_tcs3707.json
 vendor/etc/sensors/config/lps22hb_0.json
 vendor/etc/sensors/config/mmc56x3x_0.json
